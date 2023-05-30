@@ -13,6 +13,7 @@ const peajes = require('./modules/controllers/peajes');
 const costos = require('./modules/controllers/costos');
 const costeo = require('./modules/controllers/costeo');
 const comprobacion = require('./modules/controllers/comprobar');
+const frase = require('./modules/controllers/frases');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,6 +32,7 @@ app.post('/peaje', peajes.peajes);
 app.get('/costo', costos.costoss);
 app.post('/costeo', costeo.costeos);
 app.post('/comprobar', comprobacion.comprobacion);
+app.get('/frase', frase.obtenerFrase);
 
 // Start the server
 const port = process.env.PORT || 3000;
