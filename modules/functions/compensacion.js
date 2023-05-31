@@ -6,8 +6,8 @@ exports.comp = async (req) => {
         let compensacion, distanciaVacio = 0, distanciaNuevo = 0, distanciaNormal;
 
         // Si detecta un valor de compensación devuelve ese mismo
-        if (comp) {
-            return comp;
+        if (comp || comp === 0) {
+            return { "compensacion": comp};
         }
 
         // Si no carga ni descarga en lugares diferentes se toma como Spot

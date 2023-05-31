@@ -40,6 +40,7 @@ exports.costeo = async (req) => {
 
         // Compensación /////////////////////////
         const comp = parseFloat((await compensacion.comp(req)).compensacion);
+        console.log(comp);
 
         // Dias /////////////////////////
         const dias = (cargue / 24) + (2 + comp) * (((kilometros / 50) / 24) + ((((kilometros / 50) / 12) * 8) / 24)) + (descargue / 24);

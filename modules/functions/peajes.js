@@ -42,7 +42,7 @@ exports.peajes = async (req) => {
             const params = { 'q': origen, 'format': 'json', 'countrycodes': 'co' };
             const Resp = await axios.get(peajeURL, { params: params });
             const Respuesta = Resp.data;
-    
+            
             const params2 = { 'q': destino, 'format': 'json', 'countrycodes': 'co' };
             const Resp2 = await axios.get(peajeURL, { params: params2 });
             const Respuesta2 = Resp2.data;
