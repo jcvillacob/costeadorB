@@ -7,7 +7,7 @@ exports.comp = async (req) => {
 
         // Si detecta un valor de compensación devuelve ese mismo
         if (comp || comp === 0) {
-            return { "compensacion": comp};
+            return { "compensacion": parseFloat(comp)};
         }
 
         // Si no carga ni descarga en lugares diferentes se toma como Spot
@@ -48,7 +48,7 @@ exports.comp = async (req) => {
             }
         }
 
-        return { "compensacion": compensacion, "distancias": { "distanciaNormal": distanciaNormal, "distanciaVacio": distanciaVacio, "distanciaNuevo": distanciaNuevo } };
+        return { "compensacion": parseFloat(compensacion), "distancias": { "distanciaNormal": distanciaNormal, "distanciaVacio": distanciaVacio, "distanciaNuevo": distanciaNuevo } };
     } catch (error) {
         console.error('Error al obtener la compensación (Functions):', error);
         return { error: 'Error al obtener la compensación (Functions)' };

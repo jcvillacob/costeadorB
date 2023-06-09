@@ -3,6 +3,7 @@ const axios = require('axios');
 exports.distances = async (req) => {
     try {
         const ciudades = req.body.ciudades;
+        const peajesDist = req.body.peajesDist;
         const coordenadas = {};
         const ciudades_api = [];
 
@@ -47,6 +48,9 @@ exports.distances = async (req) => {
             coordenadas[ciudad_api] = { 'lat': parseFloat(lat), 'lng': parseFloat(lng) };
             distanceAPI += lng+','+lat;
             if (i !== ciudades.length - 1) {
+                for(let peaje of peajesDist[i]) {
+                    distanceAPI += ';' + peaje.location.lng+','+peaje.location.lat;
+                }
                 distanceAPI += ';';
             }
         }

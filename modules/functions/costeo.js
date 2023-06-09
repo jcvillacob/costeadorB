@@ -26,6 +26,13 @@ exports.costeo = async (req) => {
             descargue = 26;
         }
 
+
+        // Peajes /////////////////////////
+        const peaje = await peajes.peajes(req);
+        const valor_peaje = peaje.peajesTotales;
+        req.body.peajesDist = peaje.peajes;
+        
+        
         // Distancia /////////////////////////
         let kilometros, distan, distancia;
         if (!distancias){
@@ -37,11 +44,11 @@ exports.costeo = async (req) => {
             distancia.Distancia = distancias;
             kilometros = distancias * 1.03;
         }
-
+        
         // Compensación /////////////////////////
         const comp = parseFloat((await compensacion.comp(req)).compensacion);
-        console.log(comp);
-
+        const peaje_comp = valor_peaje * (1 + comp);
+        
         // Dias /////////////////////////
         const dias = (cargue / 24) + (2 + comp) * (((kilometros / 50) / 24) + ((((kilometros / 50) / 12) * 8) / 24)) + (descargue / 24);
         let dias2 = dias;
@@ -49,10 +56,7 @@ exports.costeo = async (req) => {
             dias2 = 1;
         }
 
-        // Peajes /////////////////////////
-        const peaje = await peajes.peajes(req);
-        const valor_peaje = peaje.peajesTotales;
-        const peaje_comp = valor_peaje * (1 + comp);
+        
 
         // Lectura de Costos /////////////////////////
         const costoss = await costos.costos(req);
@@ -69,7 +73,7 @@ exports.costeo = async (req) => {
         const porcentaje_utilidad = (utili + 0.006);
         let utilidad = costos_totales * porcentaje_utilidad;
         let falt = 0;
-        Acpm.price = Acpm.price * kilometros * (1 + comp);
+        Acpm.price = round(Acpm.price * kilometros * (1 + comp), -3);
 
         // Compensación por faltantes /////////////////////////
         if (tipo_vh === "TM") {
@@ -183,7 +187,7 @@ exports.costeo = async (req) => {
                 "Utilidad": round(utilidad, -3),
             },
             "Costos": {
-                "Costos Totales": round(costos_totales, -3),
+                "Costos_Totales": round(costos_totales, -3),
                 "Depreciacion": round(depre_dia, -3),
                 "Costos_Fijos": {
                     "Total_fijos": round((costos_fijos - depreciacion) * dias / 26, -3),

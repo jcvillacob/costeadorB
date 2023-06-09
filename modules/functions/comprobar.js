@@ -181,7 +181,7 @@ exports.comprobar = async (req) => {
                 "Utilidad": round(utilidad, -3),
             },
             "Costos": {
-                "Costos Totales": round(costos_totales, -3),
+                "Costos_Totales": round(costos_totales, -3),
                 "Depreciacion": round(depre_dia, -3),
                 "Costos_Fijos": {
                     "Total_fijos": round((costos_fijos - depreciacion) * dias / 26, -3),
