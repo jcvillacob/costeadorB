@@ -48,8 +48,10 @@ exports.distances = async (req) => {
             coordenadas[ciudad_api] = { 'lat': parseFloat(lat), 'lng': parseFloat(lng) };
             distanceAPI += lng+','+lat;
             if (i !== ciudades.length - 1) {
-                for(let peaje of peajesDist[i]) {
-                    distanceAPI += ';' + peaje.location.lng+','+peaje.location.lat;
+                if(peajesDist) {
+                    for(let peaje of peajesDist[i]) {
+                        distanceAPI += ';' + peaje.location.lng+','+peaje.location.lat;
+                    }
                 }
                 distanceAPI += ';';
             }
