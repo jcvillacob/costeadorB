@@ -66,7 +66,7 @@ exports.distances = async (req) => {
             const res3 = await axios.post(distanceAPI, {}, { headers });
             const dat = res3.data;
 
-            distancia = Math.round((((dat.routes[0].distance) / 1000) - 5) / 0.99);
+            distancia = Math.round((((dat.routes[0].distance) / 1000) - 5) * 0.99);
 
             // Urbanos a 50 km
             if (distancia < 50) {

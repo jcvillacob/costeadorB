@@ -15,14 +15,14 @@ exports.acpm = async (req) => {
     const kpg = req.query.kpg;
     const diesel = (x + y) * 1.05;
     const pColombia = diesel / kpg;
-
+    
     // Función de redondeo
     function round(value, precision) {
       let multiplier = Math.pow(10, precision || 0);
       return Math.round(value * multiplier) / multiplier;
     }
 
-    return ({ "price": round(pColombia, -3), "precio_diesel": round(diesel, -1) });
+    return ({ "price": round(pColombia, -1), "precio_diesel": round(diesel, -1) });
   } catch (error) {
     console.error('Error al obtener el precio del diésel (functions):', error);
     return ({ error: 'Error al obtener el precio del diésel (functions)' });
