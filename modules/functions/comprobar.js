@@ -26,6 +26,13 @@ exports.comprobar = async (req) => {
             descargue = 26;
         }
 
+        // Peajes /////////////////////////
+        const peaje = await peajes.peajes(req);
+        const valor_peaje = peaje.peajesTotales;
+        req.body.peajesDist = peaje.peajes;
+
+
+
         // Distancia /////////////////////////
         let kilometros, distan, distancia;
         if (!distancias){
@@ -40,6 +47,7 @@ exports.comprobar = async (req) => {
 
         // Compensación /////////////////////////
         const comp = parseFloat((await compensacion.comp(req)).compensacion);
+        const peaje_comp = valor_peaje * (1 + comp);
 
         // Dias /////////////////////////
         const dias = (cargue / 24) + (2 + comp) * (((kilometros / 50) / 24) + ((((kilometros / 50) / 12) * 8) / 24)) + (descargue / 24)
@@ -48,10 +56,6 @@ exports.comprobar = async (req) => {
             dias2 = 1;
         }
 
-        // Peajes /////////////////////////
-        const peaje = await peajes.peajes(req);
-        const valor_peaje = peaje.peajesTotales;
-        const peaje_comp = valor_peaje * (1 + comp);
 
         // Lectura de Costos /////////////////////////
         const costoss = await costos.costos(req);
